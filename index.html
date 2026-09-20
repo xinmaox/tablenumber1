@@ -166,8 +166,46 @@
 
   .seat-modal-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px 12px;
+  }
+  .seat-modal-grid-stage {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+  }
+  .seat-modal-grid-stage-label {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #8B0000;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    border-radius: 8px;
+    max-height: 100px;
+  }
+  .seat-modal-grid-elevator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .seat-modal-grid-elevator-label {
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .seat-modal-elevator-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
   }
 
   .seat-modal-table {
@@ -213,6 +251,27 @@
   .seat-modal-table.head {
     border-color: rgba(255, 215, 0, 0.6);
     border-width: 3px;
+  }
+
+  .seat-modal-grid > .seat-modal-table:nth-child(3n+2) {
+    transform: translateX(-22px);
+  }
+  .seat-modal-grid > .seat-modal-table:nth-child(3n+2).active {
+    transform: scale(1.2) translateX(-22px);
+  }
+  .seat-modal-grid > .seat-modal-table[data-modal-table-id="8"],
+  .seat-modal-grid > .seat-modal-table[data-modal-table-id="11"] {
+    transform: translateX(-44px);
+  }
+  .seat-modal-grid > .seat-modal-table[data-modal-table-id="8"].active,
+  .seat-modal-grid > .seat-modal-table[data-modal-table-id="11"].active {
+    transform: scale(1.2) translateX(-44px);
+  }
+  .seat-modal-grid > .seat-modal-table[data-modal-table-id="2"] {
+    transform: translateX(0);
+  }
+  .seat-modal-grid > .seat-modal-table[data-modal-table-id="2"].active {
+    transform: scale(1.2);
   }
 
   /* 左侧 - 宾客清单 */
@@ -484,10 +543,13 @@
       <div class="seat-modal-map-title">现场桌位分布</div>
       <div class="seat-modal-map">
         <div class="seat-modal-stage">
-          <div class="seat-modal-stage-label">西 湖</div>
+          <div class="seat-modal-stage-label">西湖（保俶塔）</div>
         </div>
         <div class="seat-modal-grid" id="modalTableGrid">
           <!-- 由JS填充 -->
+        </div>
+        <div class="seat-modal-elevator-row">
+          <div class="seat-modal-grid-elevator-label">电 梯</div>
         </div>
       </div>
     </div>
@@ -507,37 +569,35 @@
   const tablesData = [
     {
       id: 1,
-      name: "主桌",
+      name: "",
       isHead: true,
       guests: [
-        { name: "张伟", family: 1 },
-        { name: "李娜", family: 0 },
-        { name: "王强", family: 2 },
-        { name: "刘芳", family: 1 },
-        { name: "陈刚", family: 0 },
-        { name: "吴浩浩", family: 2 },
+        { name: "小吴小婶", family: 0 },
+        { name: "吴小毛", family: 1 },
+        { name: "吴刘应", family: 1 },
+        { name: "小吴大姨", family: 0 },
+        { name: "小吴舅妈", family: 0 },
+        { name: "赵晗", family: 0 },
+        { name: "叶翔", family: 1 },
       ]
     },
     {
       id: 2,
-      name: "娘家桌",
+      name: "",
       isHead: false,
       guests: [
-        { name: "赵明", family: 2 },
-        { name: "孙丽", family: 1 },
-        { name: "周杰", family: 0 },
-        { name: "吴敏", family: 1 },
+        { name: "小吴小叔", family: 0 },
+        { name: "小吴大妈", family: 0 },
+        { name: "梁成龙", family: 1 },
       ]
     },
     {
       id: 3,
-      name: "婆家桌",
+      name: "",
       isHead: false,
       guests: [
-        { name: "郑浩", family: 2 },
-        { name: "钱雪", family: 1 },
-        { name: "冯磊", family: 0 },
-        { name: "韩梅", family: 1 },
+        { name: "沈凤仙", family: 6 },
+        { name: "沈豪君", family: 1 },
       ]
     },
     {
@@ -545,10 +605,8 @@
       name: "",
       isHead: false,
       guests: [
-        { name: "杨帆", family: 1 },
-        { name: "朱琳", family: 2 },
-        { name: "秦涛", family: 0 },
-        { name: "许静", family: 1 },
+        { name: "郑德珍", family: 3 },
+        { name: "丽君", family: 4 },
       ]
     },
     {
@@ -556,10 +614,8 @@
       name: "",
       isHead: false,
       guests: [
-        { name: "何伟", family: 2 },
-        { name: "吕婷", family: 0 },
-        { name: "施洋", family: 1 },
-        { name: "张蕾", family: 1 },
+        { name: "桢裕", family: 4 },
+        { name: "桢华", family: 4 },
       ]
     },
     {
@@ -567,10 +623,9 @@
       name: "",
       isHead: false,
       guests: [
-        { name: "孔辉", family: 1 },
-        { name: "曹颖", family: 1 },
-        { name: "严明", family: 2 },
-        { name: "华娜", family: 0 },
+        { name: "曹鹏", family: 3 },
+        { name: "曹伟", family: 2 },
+        { name: "陆祥康", family: 2 },
       ]
     },
     {
@@ -578,32 +633,39 @@
       name: "",
       isHead: false,
       guests: [
-        { name: "金鑫", family: 0 },
-        { name: "魏芳", family: 1 },
-        { name: "陶磊", family: 2 },
-        { name: "姜莉", family: 1 },
+        { name: "葛秋菊", family: 0 },
+        { name: "李鹏", family: 0 },
+        { name: "漓江", family: 0 },
+        { name: "吴佳志", family: 1 },
+        { name: "谢秋薇", family: 0 },
+        { name: "冯佳倩", family: 0 },
+        { name: "吴雅雯", family: 0 },
+        { name: "梁沨超程", family: 1 },
       ]
     },
     {
       id: 8,
-      name: "同事桌",
+      name: "",
       isHead: false,
       guests: [
-        { name: "戚鹏", family: 1 },
-        { name: "谢婷", family: 0 },
-        { name: "邹强", family: 1 },
-        { name: "喻敏", family: 2 },
+        { name: "李玉磊", family: 1 },
+        { name: "顾佳佳", family: 2 },
+        { name: "陈娜", family: 0 },
+        { name: "陈佳", family: 0 },
+        { name: "周梦杰", family: 0 },
+        { name: "徐吉莉", family: 1 },
       ]
     },
     {
       id: 9,
-      name: "朋友桌",
+      name: "",
       isHead: false,
       guests: [
-        { name: "柏杨", family: 1 },
-        { name: "水悦", family: 1 },
-        { name: "窦鹏", family: 0 },
-        { name: "章莹", family: 2 },
+        { name: "陈龙根", family: 1 },
+        { name: "金关荣", family: 1 },
+        { name: "宋荣根", family: 1 },
+        { name: "祝军", family: 1 },
+        { name: "纪刚", family: 1 },
       ]
     },
     {
@@ -611,10 +673,12 @@
       name: "",
       isHead: false,
       guests: [
-        { name: "苏浩", family: 2 },
-        { name: "潘雪", family: 1 },
-        { name: "葛磊", family: 0 },
-        { name: "范梅", family: 1 },
+        { name: "高震", family: 0 },
+        { name: "陈浩", family: 1 },
+        { name: "张佳雯", family: 1 },
+        { name: "吴熙", family: 1 },
+        { name: "叶婷婷", family: 1 },
+        { name: "谭文瑾", family: 0 },
       ]
     },
     {
@@ -622,10 +686,11 @@
       name: "",
       isHead: false,
       guests: [
-        { name: "彭飞", family: 1 },
-        { name: "鲁婷", family: 1 },
-        { name: "韦涛", family: 0 },
-        { name: "马静", family: 2 },
+        { name: "徐国琴", family: 1 },
+        { name: "张建萍", family: 1 },
+        { name: "来爱云", family: 2 },
+        { name: "陶志强", family: 0 },
+        { name: "周伟", family: 1 },
       ]
     }
   ];
@@ -648,15 +713,33 @@
       });
     });
   });
+  allGuests.sort((a, b) => a.name.localeCompare(b.name, 'zh-Hans-CN'));
 
   // 渲染弹窗里的桌位分布图
   function renderModalMap() {
     const grid = document.getElementById('modalTableGrid');
-    grid.innerHTML = tablesData.map(table => `
-      <div class="seat-modal-table ${table.isHead ? 'head' : ''}" data-modal-table-id="${table.id}">
-        ${table.id}号
-      </div>
-    `).join('');
+    let html = '';
+    const layout = [
+      [1, 2, 3],
+      [4, 5, 'stage'],
+      [6, 7, 8],
+      [9, 10, 11]
+    ];
+    layout.forEach(row => {
+      row.forEach(cell => {
+        if (cell === 'stage') {
+          html += `<div class="seat-modal-grid-stage"><div class="seat-modal-grid-stage-label">舞 台</div></div>`;
+        } else if (cell === 'elevator') {
+          html += `<div class="seat-modal-grid-elevator"><div class="seat-modal-grid-elevator-label">电 梯</div></div>`;
+        } else {
+          const table = tablesData.find(t => t.id === cell);
+          if (table) {
+            html += `<div class="seat-modal-table ${table.isHead ? 'head' : ''}" data-modal-table-id="${table.id}">${table.id}号</div>`;
+          }
+        }
+      });
+    });
+    grid.innerHTML = html;
   }
 
   // 高亮弹窗里的桌子
@@ -728,4 +811,3 @@
 </script>
 </body>
 </html>
-
