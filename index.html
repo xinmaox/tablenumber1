@@ -481,8 +481,19 @@
     .seat-modal-map-title { font-size: 14px; letter-spacing: 3px; }
     .seat-modal-map { padding: 14px 16px; }
     .seat-modal-stage-label { padding: 5px 24px; font-size: 13px; letter-spacing: 4px; }
-    .seat-modal-table { font-size: 15px; }
+    .seat-modal-table { font-size: 15px; max-width: 70px; }
     .seat-modal-close { width: 32px; height: 32px; font-size: 16px; top: 12px; right: 14px; }
+    .seat-modal-grid { gap: 12px 6px; }
+    .seat-modal-grid > .seat-modal-table:nth-child(3n+2) { transform: translateX(-12px); }
+    .seat-modal-grid > .seat-modal-table:nth-child(3n+2).active { transform: scale(1.15) translateX(-12px); }
+    .seat-modal-grid > .seat-modal-table[data-modal-table-id="8"],
+    .seat-modal-grid > .seat-modal-table[data-modal-table-id="11"] { transform: translateX(-24px); }
+    .seat-modal-grid > .seat-modal-table[data-modal-table-id="8"].active,
+    .seat-modal-grid > .seat-modal-table[data-modal-table-id="11"].active { transform: scale(1.15) translateX(-24px); }
+    .seat-modal-grid > .seat-modal-table[data-modal-table-id="2"] { transform: translateX(0); }
+    .seat-modal-grid > .seat-modal-table[data-modal-table-id="2"].active { transform: scale(1.15); }
+    .seat-modal-grid-stage-label { font-size: 12px; padding: 6px 10px; max-height: 80px; }
+    .seat-modal-grid-elevator-label { font-size: 12px; padding: 5px 12px; }
   }
 
   /* 小屏横屏（手机横过来） */
